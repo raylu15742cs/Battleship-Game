@@ -35,8 +35,11 @@ function gameboard(height) {
       let box = document.createElement('div');
       box.classList.add(`${i}${j}`);
       box.classList.add("box")
-      box.style.height = '100px';
-      box.style.width = '100px';
+      box.style.height = '50px';
+      box.style.width = '50px';
+      box.addEventListener("click", function() {
+        box.classList.add("hit")
+      })
       bigbox.appendChild(box);
     }
   }
