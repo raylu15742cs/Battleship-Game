@@ -2,19 +2,18 @@
 const gamecontainer = document.getElementById('gameboard');
 
 let shipstorage = [
-  { title: 'Carrier', length: '5' },
-  { title: 'Battleship', length: '4' },
-  { title: 'Cruiser', length: '3' },
-  { title: 'Destroyer', length: '2' },
-  { title: 'Destroyertwo', length: '2' },
-  { title: 'Submarine', length: '1' },
-  { title: 'Submarinetwo', length: '1' },
+  { title: 'Carrier', length: '5', count: 0 },
+  { title: 'Battleship', length: '4', count: 0 },
+  { title: 'Cruiser', length: '3', count: 0 },
+  { title: 'Destroyer', length: '2', count: 0 },
+  { title: 'Destroyertwo', length: '2', count: 0 },
+  { title: 'Submarine', length: '1', count: 0 },
+  { title: 'Submarinetwo', length: '1', count: 0 },
 ];
 function ship(shipstorage) {
   for (let i = 0; i < shipstorage.length; i++) {
     smallship = document.createElement("div")
-    smallship.classList.add(shipstorage[i].title)
-    smallship.classList.add(shipstorage[i].length);
+    smallship.setAttribute("id", shipstorage[i].title)
     gamecontainer.appendChild(smallship)
     for (let j = 0; j < shipstorage[i].length; j++) {
       smallshipbox = document.createElement('div')
@@ -24,9 +23,10 @@ function ship(shipstorage) {
       let identity  = `${shipstorage[i].title}${j}`
       smallshipbox.setAttribute("id", identity)
       smallshipbox.addEventListener("click", function(){
-        console.log(identity)
         let targets = document.getElementById(identity);
         targets.classList.add('hit');
+        shipstorage[i].count += 1;
+        console.log(shipstorage[i].count);
         sink();
       })
       smallship.appendChild(smallshipbox)
@@ -42,7 +42,15 @@ function hit(identifier) {
 }
 
 function sink() {
-  
+  console.log(shipstorage[1])
+  for(let i = 0 ; i < shipstorage.length ; i++) {
+    if(shipstorage[i].length == shipstorage[i].count) {
+      for(let j = 0; j < shipstorage[i].length ; j++) {
+        let sunken = document.getElementById(`${shipstorage[i].title}${j}`);
+        sunken.classList.add('sunk');
+      }
+    }
+  }
 }
 
 function gameboard(height) {
