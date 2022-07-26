@@ -1,0 +1,7 @@
+#gameboard {
+    display: flex;
+}
+.box {
+    background-color: blue;
+    border: 1px solid red;
+}
