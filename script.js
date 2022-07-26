@@ -9,14 +9,19 @@ let shipstorage = [
   { title: 'Submarinetwo', length: '1' }
 ];
 function ship(shipstorage) {
-  let answer = ""
+  let answer = []
   for(let i = 0 ; i < shipstorage.length ; i++) {
-    let current = shipstorage[i].title
+    let current = {}
     for(let j = 0; j < shipstorage[i].length; j++) {
       //create each individual ship
-      answer += `${current}${j}`
+      current[j] = `${shipstorage[i].title}${j}`
     }
+    answer[i] = current
   }
-  return answer
+  return Object.keys(answer[0]).length
+}
+
+function hit(ship) {
+
 }
 module.exports = ship;
