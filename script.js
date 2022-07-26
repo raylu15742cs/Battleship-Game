@@ -4,13 +4,19 @@ let shipstorage = [
   { title: 'Battleship', length: '4' },
   { title: 'Cruiser', length: '3' },
   { title: 'Destroyer', length: '2' },
-  { title: 'Destroyer2', length: '2' },
+  { title: 'Destroyertwo', length: '2' },
   { title: 'Submarine', length: '1' },
-  { title: 'Submarine2', length: '1' }
+  { title: 'Submarinetwo', length: '1' }
 ];
 function ship(shipstorage) {
+  let answer = ""
   for(let i = 0 ; i < shipstorage.length ; i++) {
-    
+    let current = shipstorage[i].title
+    for(let j = 0; j < shipstorage[i].length; j++) {
+      //create each individual ship
+      answer += `${current}${j}`
+    }
   }
+  return answer
 }
 module.exports = ship;
