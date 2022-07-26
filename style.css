@@ -1,10 +1,18 @@
 #gameboard {
     display: flex;
 }
-.box {
-    border: 1px solid black;
+.box,.ships {
+    border: 2px solid black;
 }
 
 .hit {
     background-color: red;
+}
+
+.ships {
+    margin-left: 2px;
+}
+
+.sunk {
+    background-color: black;
 }

@@ -11,21 +11,39 @@ let shipstorage = [
   { title: 'Submarinetwo', length: '1' },
 ];
 function ship(shipstorage) {
-  let answer = [];
   for (let i = 0; i < shipstorage.length; i++) {
-    let current = {};
+    smallship = document.createElement("div")
+    smallship.classList.add(shipstorage[i].title)
+    smallship.classList.add(shipstorage[i].length);
+    gamecontainer.appendChild(smallship)
     for (let j = 0; j < shipstorage[i].length; j++) {
-      //create each individual ship
-      current[j] = `${shipstorage[i].title}${j}`;
+      smallshipbox = document.createElement('div')
+      smallshipbox.style.height = '50px';
+      smallshipbox.style.width = '50px';
+      smallshipbox.classList.add('ships')
+      let identity  = `${shipstorage[i].title}${j}`
+      smallshipbox.setAttribute("id", identity)
+      smallshipbox.addEventListener("click", function(){
+        console.log(identity)
+        let targets = document.getElementById(identity);
+        targets.classList.add('hit');
+        sink();
+      })
+      smallship.appendChild(smallshipbox)
+
     }
-    answer[i] = current;
   }
-  return Object.keys(answer[0]).length;
 }
 
-function hit() {}
+function hit(identifier) {
+  console.log(identifier)
+  let target = document.getElementById(identifier)
+  target.classList.add("hit")
+}
 
-function sink() {}
+function sink() {
+  
+}
 
 function gameboard(height) {
   for (let i = 0; i < height; i++) {
@@ -45,4 +63,4 @@ function gameboard(height) {
   }
 }
 
-gameboard(10);
+ship(shipstorage)
