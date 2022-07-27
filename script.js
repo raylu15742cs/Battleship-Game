@@ -39,7 +39,6 @@ function hit(e) {
 }
 
 function isSunk() {
-  console.log(shipstorage[1])
   for(let i = 0 ; i < shipstorage.length ; i++) {
     if(shipstorage[i].length == shipstorage[i].count) {
       for(let j = 0; j < shipstorage[i].length ; j++) {
