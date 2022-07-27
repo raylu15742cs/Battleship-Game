@@ -48,6 +48,7 @@ function isSunk() {
     }
   }
 }
+let ships = 0;
 
 function gameboard(height) {
   for (let i = 0; i < height; i++) {
@@ -55,16 +56,37 @@ function gameboard(height) {
     gamecontainer.appendChild(bigbox);
     for (let j = 0; j < height; j++) {
       let box = document.createElement('div');
-      box.classList.add(`${i}${j}`);
+      box.setAttribute("id", `${j}${i}`);
       box.classList.add("box")
       box.style.height = '50px';
       box.style.width = '50px';
       box.addEventListener("click", function() {
-        box.classList.add("hit")
+        if(ships == 7) {
+          box.classList.add("hits")
+        } else {
+          livedisplay(`${j}${i}`);
+          ships++
+        }
       })
+      box.addEventListener("mouseenter", function(){
+        box.classList.add("bluetimes")
+      })
+      box.addEventListener('mouseleave', function () {
+        box.classList.remove('bluetimes');
+      });
+      
       bigbox.appendChild(box);
     }
   }
 }
+gameboard(10)
 
-ship(shipstorage)
+
+function livedisplay(e){
+  let d = parseInt(e)
+  for(let i = 0 ; i < shipstorage[ships].length; i++) {
+    let hovership = document.getElementById(d)
+    hovership.classList.add("bluetime")
+    d += 10
+  }
+}

@@ -19,3 +19,10 @@
 .sunk {
     background-color: red;
 }
+.hits {
+    background-color: royalblue;
+}
+
+.bluetime , .bluetimes{
+    background-color: black;
+}
