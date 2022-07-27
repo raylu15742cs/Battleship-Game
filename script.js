@@ -29,7 +29,6 @@ function hit(e) {
   } else {
     computershipstorage[e.path[0].id[e.path[0].id.length - 2]].count++;
   }
-  //hitback();
   isSunk(e.path[0].id);
 }
 
@@ -39,6 +38,7 @@ let computershipsunkcount = 0;
 
 function isSunk(test) {
   if(test[0] !== 'c') {
+    console.log(test)
     for(let i = 0 ; i < shipstorage.length ; i++) {
       if(shipstorage[i].length == shipstorage[i].count) {
         shipstorage[i].sunk = true;
@@ -76,6 +76,7 @@ function gameboard(height, player) {
       let box = document.createElement('div');
       box.setAttribute("id", `${player}${j}${i}`);
       box.classList.add("box")
+      box.classList.add(`${player}${j}${i}`);
       box.style.height = '30px';
       box.style.width = '30px';
       box.addEventListener("click", function() {
@@ -89,6 +90,9 @@ function gameboard(height, player) {
         } else if(player == 'first') { 
           ship(`${player}`,`${j}${i}`);
         }
+      if (player == 'second') {
+        hitback();
+      }
       })
 
       box.addEventListener("mouseenter", function(){
@@ -113,7 +117,7 @@ function ship(board, e){
     for(let i = 0 ; i < shipstorage[ships].length; i++) {
       let hovership = document.getElementById(`${board}${d}`)
       hovership.classList.add("bluetime")
-      hovership.setAttribute('id', `${shipstorage[ships].title}${ships}${i}`);
+      hovership.setAttribute('id',`${shipstorage[ships].title}${ships}${i}`);
       hovership.addEventListener('click', hit);
       d += 10
     }
@@ -127,16 +131,32 @@ function random() {
 }
 function computerboard(c) {
   // need to figure out how to make it work when c < 10
-  if(c <= computershipstorage[computerships].max && c > 10) {
+  if(c <= computershipstorage[computerships].max) {
     if (taken.includes(c) == false && taken.includes(c+10) == false && taken.includes(c+20) == false && taken.includes(c+40) == false) {
       let d = c;
+      console.log(d)
       for (let i = 0; i < computershipstorage[computerships].length; i++) {
-        let hovership = document.getElementById(`second${d}`);
-        hovership.classList.add("bluetime")
-        hovership.setAttribute('id',`${computershipstorage[computerships].title}${computerships}${i}`);
-        hovership.addEventListener('click', hit);
-        taken.push(d);
-        d += 10;
+        if(d<10) {
+          let hovership = document.getElementById(`second0${d}`);
+          hovership.classList.add('bluetime');
+          hovership.setAttribute(
+            'id',
+            `${computershipstorage[computerships].title}${computerships}${i}`
+          );
+          hovership.addEventListener('click', hit);
+          taken.push(d);
+          d += 10;
+        } else {
+          let hovership = document.getElementById(`second${d}`);
+          hovership.classList.add('bluetime');
+          hovership.setAttribute(
+            'id',
+            `${computershipstorage[computerships].title}${computerships}${i}`
+          );
+          hovership.addEventListener('click', hit);
+          taken.push(d);
+          d += 10;
+        }
       }
       computerships++;
     } else {
@@ -153,9 +173,18 @@ function computerboards() {
   }
 }
 computerboards()
+let computerhits = []
+
 
 function hitback() {
-  console.log("hi")
+  let currentrandom = random();
+  if(computerhits.includes(currentrandom) != true) {
+    console.log(currentrandom)
+    var link = document.getElementsByClassName(`first${currentrandom}`);
+    if(link != null) {
+      console.log(link)
+    }
+  }
 }
 
 function gameover() {
