@@ -6,7 +6,10 @@
 }
 
 .hit {
-    background-color: red;
+    background-color: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .ships {
@@ -14,5 +17,5 @@
 }
 
 .sunk {
-    background-color: black;
+    background-color: red;
 }

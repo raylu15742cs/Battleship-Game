@@ -24,10 +24,11 @@ function ship(shipstorage) {
       smallshipbox.setAttribute("id", identity)
       smallshipbox.addEventListener("click", function(){
         let targets = document.getElementById(identity);
+        targets.innerText = "X"
         targets.classList.add('hit');
         shipstorage[i].count += 1;
         console.log(shipstorage[i].count);
-        sink();
+        isSunk();
       })
       smallship.appendChild(smallshipbox)
 
@@ -41,7 +42,7 @@ function hit(identifier) {
   target.classList.add("hit")
 }
 
-function sink() {
+function isSunk() {
   console.log(shipstorage[1])
   for(let i = 0 ; i < shipstorage.length ; i++) {
     if(shipstorage[i].length == shipstorage[i].count) {
