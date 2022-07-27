@@ -91,7 +91,7 @@ function gameboard(height, player) {
           ship(`${player}`,`${j}${i}`);
         }
       if (player == 'second') {
-        hitback();
+        // hitback();
       }
       })
 
@@ -117,8 +117,8 @@ function ship(board, e){
     for(let i = 0 ; i < shipstorage[ships].length; i++) {
       let hovership = document.getElementById(`${board}${d}`)
       hovership.classList.add("bluetime")
-      hovership.setAttribute('id',`${shipstorage[ships].title}${ships}${i}`);
-      hovership.addEventListener('click', hit);
+      hovership.classList.add(shipstorage[ships].title)
+      hovership.addEventListener('click', hit(`${board}${d}`));
       d += 10
     }
     ships++
@@ -134,7 +134,6 @@ function computerboard(c) {
   if(c <= computershipstorage[computerships].max) {
     if (taken.includes(c) == false && taken.includes(c+10) == false && taken.includes(c+20) == false && taken.includes(c+40) == false) {
       let d = c;
-      console.log(d)
       for (let i = 0; i < computershipstorage[computerships].length; i++) {
         if(d<10) {
           let hovership = document.getElementById(`second0${d}`);
@@ -173,19 +172,6 @@ function computerboards() {
   }
 }
 computerboards()
-let computerhits = []
-
-
-function hitback() {
-  let currentrandom = random();
-  if(computerhits.includes(currentrandom) != true) {
-    console.log(currentrandom)
-    var link = document.getElementsByClassName(`first${currentrandom}`);
-    if(link != null) {
-      console.log(link)
-    }
-  }
-}
 
 function gameover() {
   let shipcount = 0;
