@@ -1,5 +1,9 @@
-#gameboard {
+.first,.second, #gameboard{
     display: flex;
+}
+
+.first {
+    margin-right: 30px;
 }
 .box,.ships {
     border: 2px solid black;

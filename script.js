@@ -31,10 +31,12 @@ function isSunk() {
 }
 let ships = 0;
 
-function gameboard(height) {
+function gameboard(height, player) {
+  let game = document.createElement('div')
+  game.classList.add(player)
   for (let i = 0; i < height; i++) {
     bigbox = document.createElement('div');
-    gamecontainer.appendChild(bigbox);
+    game.appendChild(bigbox);
     for (let j = 0; j < height; j++) {
       let box = document.createElement('div');
       box.setAttribute("id", `${j}${i}`);
@@ -64,8 +66,10 @@ function gameboard(height) {
       bigbox.appendChild(box);
     }
   }
+  gamecontainer.appendChild(game)
 }
-gameboard(10)
+gameboard(10, 'first')
+gameboard(10, 'second')
 
 
 function ship(e){
