@@ -8,24 +8,6 @@ let shipstorage = [
   { title: 'Destroyer', length: '2', count: 0 },
   { title: 'Submarine', length: '1', count: 0 },
 ];
-function ship(shipstorage) {
-  for (let i = 0; i < shipstorage.length; i++) {
-    smallship = document.createElement("div")
-    smallship.setAttribute("id", shipstorage[i].title)
-    gamecontainer.appendChild(smallship)
-    for (let j = 0; j < shipstorage[i].length; j++) {
-      smallshipbox = document.createElement('div')
-      smallshipbox.style.height = '50px';
-      smallshipbox.style.width = '50px';
-      smallshipbox.classList.add('ships')
-      let identity  = `${shipstorage[i].title}${j}${i}`
-      smallshipbox.setAttribute("id", identity)
-      smallshipbox.addEventListener("click", hit)
-      smallship.appendChild(smallshipbox)
-
-    }
-  }
-}
 
 function hit(e) {
   let targets = document.getElementById(e.path[0].id);
@@ -57,8 +39,8 @@ function gameboard(height) {
       let box = document.createElement('div');
       box.setAttribute("id", `${j}${i}`);
       box.classList.add("box")
-      box.style.height = '50px';
-      box.style.width = '50px';
+      box.style.height = '30px';
+      box.style.width = '30px';
       box.addEventListener("click", function() {
         if(ships == 5) {
           if (
@@ -68,7 +50,7 @@ function gameboard(height) {
             box.classList.add('hits');
           }
         } else {
-          livedisplay(`${j}${i}`);
+          ship(`${j}${i}`);
           ships++
         }
       })
@@ -86,7 +68,7 @@ function gameboard(height) {
 gameboard(10)
 
 
-function livedisplay(e){
+function ship(e){
   let d = parseInt(e)
   for(let i = 0 ; i < shipstorage[ships].length; i++) {
     let hovership = document.getElementById(d)
