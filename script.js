@@ -6,9 +6,7 @@ let shipstorage = [
   { title: 'Battleship', length: '4', count: 0 },
   { title: 'Cruiser', length: '3', count: 0 },
   { title: 'Destroyer', length: '2', count: 0 },
-  { title: 'Destroyertwo', length: '2', count: 0 },
   { title: 'Submarine', length: '1', count: 0 },
-  { title: 'Submarinetwo', length: '1', count: 0 },
 ];
 function ship(shipstorage) {
   for (let i = 0; i < shipstorage.length; i++) {
@@ -30,11 +28,12 @@ function ship(shipstorage) {
 }
 
 function hit(e) {
-  let shipcounter = e.path[0].id[e.path[0].id.length - 1];
   let targets = document.getElementById(e.path[0].id);
+  targets.classList.remove('hits')
+  targets.classList.remove('bluetime');
   targets.innerText = 'X';
   targets.classList.add('hit');
-  shipstorage[shipcounter].count += 1;
+  shipstorage[e.path[0].id[e.path[0].id.length - 2]].count ++;
   isSunk();
 }
 
@@ -42,7 +41,7 @@ function isSunk() {
   for(let i = 0 ; i < shipstorage.length ; i++) {
     if(shipstorage[i].length == shipstorage[i].count) {
       for(let j = 0; j < shipstorage[i].length ; j++) {
-        let sunken = document.getElementById(`${shipstorage[i].title}${j}${i}`);
+        let sunken = document.getElementById(`${shipstorage[i].title}${i}${j}`);
         sunken.classList.add('sunk');
       }
     }
@@ -61,8 +60,13 @@ function gameboard(height) {
       box.style.height = '50px';
       box.style.width = '50px';
       box.addEventListener("click", function() {
-        if(ships == 7) {
-          box.classList.add("hits")
+        if(ships == 5) {
+          if (
+            box.classList.contains('hit') != true &&
+            box.classList.contains('sunk') != true
+          ) {
+            box.classList.add('hits');
+          }
         } else {
           livedisplay(`${j}${i}`);
           ships++
@@ -87,6 +91,8 @@ function livedisplay(e){
   for(let i = 0 ; i < shipstorage[ships].length; i++) {
     let hovership = document.getElementById(d)
     hovership.classList.add("bluetime")
+    hovership.setAttribute('id', `${shipstorage[ships].title}${ships}${i}`);
+    hovership.addEventListener('click', hit);
     d += 10
   }
 }

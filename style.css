@@ -23,6 +23,9 @@
     background-color: royalblue;
 }
 
-.bluetime , .bluetimes{
+.bluetime{
     background-color: black;
+}
+.bluetimes {
+    background-color: yellow;
 }
