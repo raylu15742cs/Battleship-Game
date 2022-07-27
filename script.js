@@ -2,11 +2,11 @@
 const gamecontainer = document.getElementById('gameboard');
 
 let shipstorage = [
-  { title: 'Carrier', length: '5', count: 0 },
-  { title: 'Battleship', length: '4', count: 0 },
-  { title: 'Cruiser', length: '3', count: 0 },
-  { title: 'Destroyer', length: '2', count: 0 },
-  { title: 'Submarine', length: '1', count: 0 },
+  { title: 'Carrier', length: '5', count: 0 , max: 59 },
+  { title: 'Battleship', length: '4', count: 0 ,max: 69},
+  { title: 'Cruiser', length: '3', count: 0 , max: 79},
+  { title: 'Destroyer', length: '2', count: 0, max: 89 },
+  { title: 'Submarine', length: '1', count: 0 , max: 99},
 ];
 
 function hit(e) {
@@ -30,6 +30,7 @@ function isSunk() {
   }
 }
 let ships = 0;
+let computerships = 0;
 
 function gameboard(height, player) {
   let game = document.createElement('div')
@@ -39,7 +40,7 @@ function gameboard(height, player) {
     game.appendChild(bigbox);
     for (let j = 0; j < height; j++) {
       let box = document.createElement('div');
-      box.setAttribute("id", `${j}${i}`);
+      box.setAttribute("id", `${player}${j}${i}`);
       box.classList.add("box")
       box.style.height = '30px';
       box.style.width = '30px';
@@ -51,11 +52,11 @@ function gameboard(height, player) {
           ) {
             box.classList.add('hits');
           }
-        } else {
-          ship(`${j}${i}`);
-          ships++
+        } else if(player == 'first') { 
+          ship(`${player}`,`${j}${i}`);
         }
       })
+
       box.addEventListener("mouseenter", function(){
         box.classList.add("bluetimes")
       })
@@ -72,13 +73,40 @@ gameboard(10, 'first')
 gameboard(10, 'second')
 
 
-function ship(e){
+function ship(board, e){
   let d = parseInt(e)
-  for(let i = 0 ; i < shipstorage[ships].length; i++) {
-    let hovership = document.getElementById(d)
-    hovership.classList.add("bluetime")
-    hovership.setAttribute('id', `${shipstorage[ships].title}${ships}${i}`);
-    hovership.addEventListener('click', hit);
-    d += 10
+  console.log(`${board}${d}`);
+  if(shipstorage[ships].max > e ) {
+    for(let i = 0 ; i < shipstorage[ships].length; i++) {
+      let hovership = document.getElementById(`${board}${d}`)
+      hovership.classList.add("bluetime")
+      hovership.setAttribute('id', `${shipstorage[ships].title}${ships}${i}`);
+      hovership.addEventListener('click', hit);
+      d += 10
+    }
+    ships++
   }
 }
+function random() {
+  let current = Math.floor(Math.random() * 100);
+  //console.log(current)
+  return current
+}
+function computerboard(c) {
+  //generate random number
+  // make sure random number is not taken
+  if(c <= shipstorage[computerships].max) {
+    for (let i = 0; i < shipstorage[computerships].length; i++) {}
+    console.log(computerships, c)
+    computerships++;
+  } else {
+    computerboard(random())
+  }
+}
+
+function computerboards() {
+  while(computerships < 5) {
+    computerboard(random())
+  }
+}
+computerboards()
