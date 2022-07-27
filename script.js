@@ -20,26 +20,22 @@ function ship(shipstorage) {
       smallshipbox.style.height = '50px';
       smallshipbox.style.width = '50px';
       smallshipbox.classList.add('ships')
-      let identity  = `${shipstorage[i].title}${j}`
+      let identity  = `${shipstorage[i].title}${j}${i}`
       smallshipbox.setAttribute("id", identity)
-      smallshipbox.addEventListener("click", function(){
-        let targets = document.getElementById(identity);
-        targets.innerText = "X"
-        targets.classList.add('hit');
-        shipstorage[i].count += 1;
-        console.log(shipstorage[i].count);
-        isSunk();
-      })
+      smallshipbox.addEventListener("click", hit)
       smallship.appendChild(smallshipbox)
 
     }
   }
 }
 
-function hit(identifier) {
-  console.log(identifier)
-  let target = document.getElementById(identifier)
-  target.classList.add("hit")
+function hit(e) {
+  let shipcounter = e.path[0].id[e.path[0].id.length - 1];
+  let targets = document.getElementById(e.path[0].id);
+  targets.innerText = 'X';
+  targets.classList.add('hit');
+  shipstorage[shipcounter].count += 1;
+  isSunk();
 }
 
 function isSunk() {
@@ -47,7 +43,7 @@ function isSunk() {
   for(let i = 0 ; i < shipstorage.length ; i++) {
     if(shipstorage[i].length == shipstorage[i].count) {
       for(let j = 0; j < shipstorage[i].length ; j++) {
-        let sunken = document.getElementById(`${shipstorage[i].title}${j}`);
+        let sunken = document.getElementById(`${shipstorage[i].title}${j}${i}`);
         sunken.classList.add('sunk');
       }
     }
