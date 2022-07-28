@@ -66,9 +66,7 @@ let shipcount = 0
 function ships(e) {
   if (shipcount < 5) {
     let currentspot = e.path[0].id;
-    let currentspots = currentspot[currentspot.length-1]
-    let currentspot2 = currentspot[currentspot.length-2]
-    console.log(parseInt(currentspot2+currentspots))
+    console.log(parseInt(currentspot.slice(-2)))
     let ship = document.getElementById(e.path[0].id);
     let shipinner = document.createElement('div');
     shipinner.setAttribute('id', `${shipstorage[shipcount].title}`);
