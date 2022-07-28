@@ -18,7 +18,8 @@ let computershipstorage = [
 ];
 
 function hit(e) {
-  let targets = document.getElementById(e.path[0].id);
+  console.log(e)
+  let targets = document.getElementById(e);
   targets.classList.remove('hits')
   targets.classList.remove('bluetime');
   targets.innerText = 'X';
@@ -77,8 +78,8 @@ function gameboard(height, player) {
       box.setAttribute("id", `${player}${j}${i}`);
       box.classList.add("box")
       box.classList.add(`${player}${j}${i}`);
-      box.style.height = '30px';
-      box.style.width = '30px';
+      //box.style.height = '30px';
+      //box.style.width = '30px';
       box.addEventListener("click", function() {
         if(ships == 5) {
           if (
@@ -96,10 +97,10 @@ function gameboard(height, player) {
       })
 
       box.addEventListener("mouseenter", function(){
-        box.classList.add("bluetimes")
+        box.classList.add("blackhover")
       })
       box.addEventListener('mouseleave', function () {
-        box.classList.remove('bluetimes');
+        box.classList.remove('blackhover');
       });
       
       bigbox.appendChild(box);
@@ -110,7 +111,7 @@ function gameboard(height, player) {
 gameboard(10, 'first')
 gameboard(10, 'second')
 
-
+// playerships
 function ship(board, e){
   let d = parseInt(e)
   if(shipstorage[ships].max > e ) {
@@ -129,6 +130,8 @@ function random() {
   //console.log(current)
   return current
 }
+
+// computer ships
 function computerboard(c) {
   // need to figure out how to make it work when c < 10
   if(c <= computershipstorage[computerships].max) {

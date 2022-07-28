@@ -1,14 +1,18 @@
-.first,.second, #gameboard{
+#Human, #Computer, #gameboard{
     display: flex;
 }
 
-.first {
+#Human {
     margin-right: 30px;
 }
 .box,.ships {
     border: 2px solid black;
 }
 
+.box {
+    height: 30px;
+    width: 30px;
+}
 .hit {
     background-color: pink;
     display: flex;
@@ -30,6 +34,16 @@
 .bluetime{
     background-color: black;
 }
-.bluetimes {
+.blackhover {
     background-color: yellow;
+}
+
+.title {
+    text-align: center;
+}
+
+#frominside {
+    background-color: red;
+    height: 30px;
+    width: auto;
 }
