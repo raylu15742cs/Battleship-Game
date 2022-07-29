@@ -284,7 +284,7 @@ function gameover() {
       shipsunkcount++
     }
     if(shipsunkcount == 5) {
-      Alert("You Lose")
+      alert("You Lose")
     }
   }
   for (let i = 0; i < computershipstorage.length; i++) {
@@ -292,7 +292,7 @@ function gameover() {
       computershipsunkcount++;
     }
     if (computershipsunkcount == 5) {
-      Alert('You Win');
+      alert('You Win');
     }
   }
 }
