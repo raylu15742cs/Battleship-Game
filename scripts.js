@@ -1,3 +1,6 @@
+/* when fixing, add a user interface that tracks what is happening maybe even a better image of the ships
+*/
+
 const gamecontainer = document.getElementById('gameboard')
 let shipstorage = [
   { title: 'Carrier', length: '5', count: 0, max: 59, sunk: false },
