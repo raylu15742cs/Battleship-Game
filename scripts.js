@@ -2,7 +2,7 @@ const gamecontainer = document.getElementById('gameboard')
 let shipstorage = [
   { title: 'Carrier', length: '5', count: 0, max: 59, sunk: false },
   { title: 'Battleship', length: '4', count: 0, max: 69, sunk: false },
-  { title: 'Cruiser', length: '3', count: 0, max: 79, sunk: false },
+  { title: 'Zruiser', length: '3', count: 0, max: 79, sunk: false },
   { title: 'Destroyer', length: '2', count: 0, max: 89, sunk: false },
   { title: 'Submarine', length: '1', count: 0, max: 99, sunk: false },
 ];
@@ -10,7 +10,7 @@ let shipstorage = [
 let computershipstorage = [
   { title: 'compCarrier', length: '5', count: 0, max: 59, sunk: false },
   { title: 'compBattleship', length: '4', count: 0, max: 69, sunk: false },
-  { title: 'compCruiser', length: '3', count: 0, max: 79, sunk: false },
+  { title: 'compZruiser', length: '3', count: 0, max: 79, sunk: false },
   { title: 'compDestroyer', length: '2', count: 0, max: 89, sunk: false },
   { title: 'compSubmarine', length: '1', count: 0, max: 99, sunk: false },
 ];
@@ -52,6 +52,9 @@ function buildbox(player,i,j) {
     if(player == "Human") {
       box.addEventListener('click', ships);
     }
+    if(player == "Computer") {
+      box.addEventListener("click", hitback, {once: true})
+    }
     return box
 }
 
@@ -62,7 +65,6 @@ buildgameboard(10, 'Computer');
 let shipcount = 0
 let shiptaken = []
 function ships(e) {
-  let testspot = e
   let currentspot = e.path[0].id;
   if (shipcount < 5 && shipstorage[shipcount].max > currentspot.slice(-2)) {
     let location = parseInt(currentspot.slice(-2));
@@ -83,7 +85,7 @@ function ships(e) {
         let ship = document.getElementById(`Human${exactlocation}`);
         ship.removeEventListener("click", hit, {once:true})
         let shipinner = document.createElement('div');
-        shipinner.setAttribute('id', `${shipstorage[shipcount].title}${i}`);
+        shipinner.setAttribute('id', `${shipstorage[shipcount].title[0]}${i}`);
         shipinner.classList.add('playership');
         shipinner.classList.add("playershipcolor")
         shipinner.addEventListener('click',hit , {once: true});
@@ -118,7 +120,7 @@ function hit(e) {
 function isSunk(e) { 
   let shipname = e.path[0].id.slice(0,-1)
   for(let i = 0; i < shipstorage.length ; i++) {
-    if(shipname == shipstorage[i].title) {
+    if(shipname == shipstorage[i].title[0]) {
       shipstorage[i].count++;
     }
   }
@@ -127,7 +129,7 @@ function isSunk(e) {
       shipstorage[i].sunk = true;
       for (let j = 0; j < shipstorage[i].length; j++) {
         let shipsname = shipstorage[i].title
-        let target = document.getElementById(`${shipsname}${j}`);
+        let target = document.getElementById(`${shipsname[0]}${j}`);
         target.classList.add('sunk');
         target.classList.remove('playhit');
       }
@@ -145,6 +147,49 @@ function gameover() {
     }
     if(shipsunkcount == 5) {
       console.log("You Lose")
+    }
+  }
+}
+
+//random 
+function random() {
+  let randomnumber =  Math.floor(Math.random()*100)
+  return randomnumber
+}
+
+
+// hitback
+
+let taken = []
+function hitback(e) {
+  if(shipcount == 5) {
+    let currentrandom = random()
+    if(taken.includes(currentrandom)) {
+      hitback()
+      console.log('hi')
+    } else {
+      taken.push(currentrandom)
+      if (currentrandom < 10) {
+        let target = document.getElementById(`Human0${currentrandom}`);
+        if (target.innerHTML != false) {
+          let shiptarget = document.getElementById(
+            `${target.innerHTML.substring(9, 11)}`
+          );
+          shiptarget.click();
+          //console.log(target.innerHTML.substring(9,11));
+        } else {
+          target.click();
+        }
+      } else {
+        let target = document.getElementById(`Human${currentrandom}`);
+        if (target.innerHTML != false) {
+          let shiptarget = document.getElementById(
+            `${target.innerHTML.substring(9, 11)}`
+          );
+          shiptarget.click();
+        }
+        target.click();
+      }
     }
   }
 }
