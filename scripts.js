@@ -40,7 +40,7 @@ function buildgameboard(height,player) {
 
 function buildbox(player,i,j) {
     let box = document.createElement('div');
-    box.setAttribute('id', `${player}${j}${i}`);
+    box.setAttribute('id', `${player}${i}${j}`);
     box.classList.add('box');
     box.addEventListener('mouseenter', function () {
       box.classList.add('blackhover');
@@ -48,13 +48,10 @@ function buildbox(player,i,j) {
     box.addEventListener('mouseenter', function () {
       box.classList.remove('blackhover');
     });
-    box.addEventListener('click',function(e) {
-        hit(e);
-      },{ once: true }
-    );
-    box.addEventListener("click", function(e) {
-        ships(e)
-    })
+    box.addEventListener('click', hit , {once: true});
+    if(player == "Human") {
+      box.addEventListener('click', ships);
+    }
     return box
 }
 
@@ -63,23 +60,39 @@ buildgameboard(10, 'Computer');
 
 // create player ships
 let shipcount = 0
+let shiptaken = []
 function ships(e) {
-  if (shipcount < 5) {
-    let currentspot = e.path[0].id;
-    console.log(parseInt(currentspot.slice(-2)))
-    let ship = document.getElementById(e.path[0].id);
-    let shipinner = document.createElement('div');
-    shipinner.setAttribute('id', `${shipstorage[shipcount].title}`);
-    ship.appendChild(shipinner);
-    console.log(e.path[0].id);
-    shipcount++
-  }
-  /*
-    let ship = document.getElementById('Human73');
+  let testspot = e
+  let currentspot = e.path[0].id;
+  if (shipcount < 5 && shipstorage[shipcount].max > currentspot.slice(-2)) {
+    let location = parseInt(currentspot.slice(-2));
+    let failcount = true;
+    // loop though count for each spot and make sure its not taken
+    for (let i = 0; i < shipstorage[shipcount].length; i++) {
+      if (shiptaken.includes(location)) {
+        failcount = false;
+      } else {
+        shiptaken.push(location);
+        location += 10;
+      }
+    }
+    // check the loop and then run it
+    if (failcount) {
+      let exactlocation = currentspot.slice(-2);
+      for (let i = 0; i < shipstorage[shipcount].length; i++) {
+        let ship = document.getElementById(`Human${exactlocation}`);
+        ship.removeEventListener("click", hit, {once:true})
         let shipinner = document.createElement('div');
-        shipinner.setAttribute('id', 'frominside');
+        shipinner.setAttribute('id', `${shipstorage[shipcount].title}${i}`);
+        shipinner.classList.add('playership');
+        shipinner.classList.add("playershipcolor")
+        shipinner.addEventListener('click',hit , {once: true});
         ship.appendChild(shipinner);
-    */
+        exactlocation = parseInt(exactlocation) + 10;
+      }
+      shipcount++;
+    }
+  }
 }
 
 //ships();
@@ -87,10 +100,51 @@ function ships(e) {
 
 // tracks hits
 function hit(e) {
-    let box = document.getElementById(e.path[0].id)
-    box.classList.add('hits')
+  if(shipcount == 5) {
+    let box = document.getElementById(e.path[0].id);
+    if (e.path.length == 10) {
+      box.classList.remove('playershipcolor');
+      box.classList.add('playerhit');
+      box.innerHTML = 'X';
+      isSunk(e);
+    } else {
+      box.classList.add('hits');
+    }
+  }
 }
 
 // tracks sunks
 
+function isSunk(e) { 
+  let shipname = e.path[0].id.slice(0,-1)
+  for(let i = 0; i < shipstorage.length ; i++) {
+    if(shipname == shipstorage[i].title) {
+      shipstorage[i].count++;
+    }
+  }
+  for(let i = 0; i < shipstorage.length ; i++) {
+    if (shipstorage[i].count == shipstorage[i].length) {
+      shipstorage[i].sunk = true;
+      for (let j = 0; j < shipstorage[i].length; j++) {
+        let shipsname = shipstorage[i].title
+        let target = document.getElementById(`${shipsname}${j}`);
+        target.classList.add('sunk');
+        target.classList.remove('playhit');
+      }
+    }
+  }
+  gameover();
+}
+
 // gameover
+function gameover() {
+  shipsunkcount = 0;
+  for(let i = 0; i < shipstorage.length ; i++) {
+    if(shipstorage[i].sunk) {
+      shipsunkcount++
+    }
+    if(shipsunkcount == 5) {
+      console.log("You Lose")
+    }
+  }
+}
