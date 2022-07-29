@@ -8,11 +8,11 @@ let shipstorage = [
 ];
 
 let computershipstorage = [
-  { title: 'compCarrier', length: '5', count: 0, max: 59, sunk: false },
-  { title: 'compBattleship', length: '4', count: 0, max: 69, sunk: false },
-  { title: 'compZruiser', length: '3', count: 0, max: 79, sunk: false },
-  { title: 'compDestroyer', length: '2', count: 0, max: 89, sunk: false },
-  { title: 'compSubmarine', length: '1', count: 0, max: 99, sunk: false },
+  { title: 'ECarrier', length: '5', count: 0, max: 59, sunk: false },
+  { title: 'FBattleship', length: '4', count: 0, max: 69, sunk: false },
+  { title: 'GZruiser', length: '3', count: 0, max: 79, sunk: false },
+  { title: 'HDestroyer', length: '2', count: 0, max: 89, sunk: false },
+  { title: 'ISubmarine', length: '1', count: 0, max: 99, sunk: false },
 ];
 
 
@@ -100,6 +100,96 @@ function ships(e) {
 //ships();
 // create computer ships
 
+//need to create computerships and make sure it works on click 
+ 
+let computerspottaken = []
+let failcount = 0;
+function computerships() {
+  for(let i = 0; i < computershipstorage.length; i++) {
+    let currentrandom = random();
+    if(computershipstorage[i].max > currentrandom) {
+    computershiptest(currentrandom,i)
+      if(failcount == 0) {
+        for (let j = 0; j < computershipstorage[i].length; j++) {
+          if(currentrandom < 10) {
+            let target = document.getElementById(`Computer0${currentrandom}`);
+            target.removeEventListener('click', hit, { once: true });
+            let compshipinner = document.createElement("div")
+            compshipinner.setAttribute("id", `${computershipstorage[i].title[0]}${j}`)
+            compshipinner.addEventListener('click', comphit, { once: true });
+            compshipinner.classList.add('playership');
+            target.appendChild(compshipinner)
+            currentrandom += 10
+          } else {
+            let target = document.getElementById(`Computer${currentrandom}`)
+            target.removeEventListener('click', hit, { once: true });
+            let compshipinner = document.createElement('div');
+            compshipinner.setAttribute('id',`${computershipstorage[i].title[0]}${j}`);
+            compshipinner.addEventListener('click', comphit, { once: true });
+            compshipinner.classList.add('playership');
+            target.appendChild(compshipinner);
+            currentrandom += 10;
+          }
+        }
+      } else {
+        failcount = 0;
+        console.log("oops")
+        i--
+      }
+    } else {
+      i--
+    }
+  
+  }
+}
+// computer hit 
+function comphit(e) {
+  let box = document.getElementById(e.path[0].id)
+  box.classList.remove('playershipcolor');
+  box.classList.add('playerhit');
+  box.innerHTML = 'X';
+  isCSunk(e);
+}
+
+function isCSunk(e) {
+  let locator = e.path[0].id[0]
+  for(let i = 0 ; i < computershipstorage.length ; i++) {
+    if(locator == computershipstorage[i].title[0]) {
+      computershipstorage[i].count++
+    }
+  }
+  for(let i = 0; i < computershipstorage.length; i++) {
+    if(computershipstorage[i].count == computershipstorage[i].length) {
+      computershipstorage[i].sunk = true;
+      for (let j = 0; j < computershipstorage[i].length; j++) {
+        let shipsname = computershipstorage[i].title;
+        let target = document.getElementById(`${shipsname[0]}${j}`);
+        target.classList.add('sunk');
+        target.classList.remove('playhit');
+      }
+    }
+  }
+
+}
+
+// test if ship can be there 
+
+function computershiptest(currentrandom , position ) {
+  let current = currentrandom ;
+  for( let i = 0 ; i < computershipstorage[position].length; i++ ) {
+    if (computerspottaken.includes(current)) {
+      failcount ++;
+      i += 10
+    } else {
+      computerspottaken.push(current)
+      current += 10;
+    }
+  }
+}
+computerships();
+
+
+
 // tracks hits
 function hit(e) {
   if(shipcount == 5) {
@@ -135,21 +225,11 @@ function isSunk(e) {
       }
     }
   }
+  
   gameover();
 }
 
-// gameover
-function gameover() {
-  shipsunkcount = 0;
-  for(let i = 0; i < shipstorage.length ; i++) {
-    if(shipstorage[i].sunk) {
-      shipsunkcount++
-    }
-    if(shipsunkcount == 5) {
-      console.log("You Lose")
-    }
-  }
-}
+
 
 //random 
 function random() {
@@ -161,12 +241,13 @@ function random() {
 // hitback
 
 let taken = []
+
+
 function hitback(e) {
   if(shipcount == 5) {
     let currentrandom = random()
     if(taken.includes(currentrandom)) {
       hitback()
-      console.log('hi')
     } else {
       taken.push(currentrandom)
       if (currentrandom < 10) {
@@ -190,6 +271,28 @@ function hitback(e) {
         }
         target.click();
       }
+    }
+  }
+}
+
+// gameover
+function gameover() {
+  shipsunkcount = 0;
+  computershipsunkcount = 0;
+  for(let i = 0; i < shipstorage.length ; i++) {
+    if(shipstorage[i].sunk) {
+      shipsunkcount++
+    }
+    if(shipsunkcount == 5) {
+      Alert("You Lose")
+    }
+  }
+  for (let i = 0; i < computershipstorage.length; i++) {
+    if (computershipstorage[i].sunk) {
+      computershipsunkcount++;
+    }
+    if (computershipsunkcount == 5) {
+      Alert('You Win');
     }
   }
 }
