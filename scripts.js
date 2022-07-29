@@ -1,4 +1,5 @@
 /* when fixing, add a user interface that tracks what is happening maybe even a better image of the ships
+add mobile support
 */
 
 const gamecontainer = document.getElementById('gameboard')
