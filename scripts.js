@@ -51,12 +51,12 @@ function buildbox(player,i,j) {
     box.addEventListener('mouseenter', function () {
       box.classList.remove('blackhover');
     });
-    box.addEventListener('click tap', hit , {once: true});
+    box.addEventListener('click', hit , {once: true});
     if(player == "Human") {
-      box.addEventListener('click tap', ships);
+      box.addEventListener('click', ships);
     }
     if(player == "Computer") {
-      box.addEventListener("click tap", hitback, {once: true})
+      box.addEventListener("click", hitback, {once: true})
     }
     return box
 }
@@ -86,12 +86,12 @@ function ships(e) {
       let exactlocation = currentspot.slice(-2);
       for (let i = 0; i < shipstorage[shipcount].length; i++) {
         let ship = document.getElementById(`Human${exactlocation}`);
-        ship.removeEventListener("click tap", hit, {once:true})
+        ship.removeEventListener("click", hit, {once:true})
         let shipinner = document.createElement('div');
         shipinner.setAttribute('id', `${shipstorage[shipcount].title[0]}${i}`);
         shipinner.classList.add('playership');
         shipinner.classList.add("playershipcolor")
-        shipinner.addEventListener('click tap',hit , {once: true});
+        shipinner.addEventListener('click',hit , {once: true});
         ship.appendChild(shipinner);
         exactlocation = parseInt(exactlocation) + 10;
       }
@@ -116,19 +116,19 @@ function computerships() {
         for (let j = 0; j < computershipstorage[i].length; j++) {
           if(currentrandom < 10) {
             let target = document.getElementById(`Computer0${currentrandom}`);
-            target.removeEventListener('click tap', hit, { once: true });
+            target.removeEventListener('click', hit, { once: true });
             let compshipinner = document.createElement("div")
             compshipinner.setAttribute("id", `${computershipstorage[i].title[0]}${j}`)
-            compshipinner.addEventListener('click tap', comphit, { once: true });
+            compshipinner.addEventListener('click', comphit, { once: true });
             compshipinner.classList.add('playership');
             target.appendChild(compshipinner)
             currentrandom += 10
           } else {
             let target = document.getElementById(`Computer${currentrandom}`)
-            target.removeEventListener('click tap', hit, { once: true });
+            target.removeEventListener('click', hit, { once: true });
             let compshipinner = document.createElement('div');
             compshipinner.setAttribute('id',`${computershipstorage[i].title[0]}${j}`);
-            compshipinner.addEventListener('click tap', comphit, { once: true });
+            compshipinner.addEventListener('click', comphit, { once: true });
             compshipinner.classList.add('playership');
             target.appendChild(compshipinner);
             currentrandom += 10;
