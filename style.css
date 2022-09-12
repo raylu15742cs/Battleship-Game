@@ -89,3 +89,7 @@ h1 {
 body {
     padding: 0 10vw;
 }
+
+.github {
+    height: 1.25vh;
+}
