@@ -39,7 +39,7 @@ function buildgameboard(height,player) {
         }
         gameboard.appendChild(innerboard)
     }
-    gamecontainer.appendChild(gameboard); 
+    gamecontainer.appendChild(gameboard);
 }
 
 function buildbox(player,i,j) {
@@ -64,7 +64,6 @@ function buildbox(player,i,j) {
 
 buildgameboard(10,"Human")
 buildgameboard(10, 'Computer');
-
 // create player ships
 let shipcount = 0
 let shiptaken = []
