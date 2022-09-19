@@ -3,6 +3,12 @@
     "jest": "^28.1.3"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest --env=jsdom"
+  },
+  "dependencies": {
+    "jsdom": "^20.0.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   }
 }
