@@ -5,7 +5,36 @@ h1 {
     margin: 0;
 }
 
+.title {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.header {
+    height: 10vh;
+    margin: 0;
+}
+.rules {
+    padding-top: 3vh;
+    height: 50vh;
+    text-align: center;
+}
+.footer{
+    height: 1vh;
+    text-align: center;
+}
+body {
+    padding: 0 20vw;
+}
+
+
+
 /* Rules for the game */
+#frominside {
+    background-color: red;
+    height: 30px;
+    width: auto;
+}
 
 .sunk {
     background-color: red;
@@ -21,8 +50,22 @@ h1 {
     background-color: yellow;
 }
 
+.playerhit {
+    background-color: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 /* Rules for the Board */ 
+
+#gameboard {
+    display: flex;
+    justify-content: center;
+    padding-top: 4vh;
+    height: 29.5vh;
+}
 
 #Human, #Computer, #gameboard{
     display: flex;
@@ -44,4 +87,11 @@ h1 {
     margin-left: 2px;
 }
 
+.playership {
+    height: 30px;
+    width: auto;
+}
+.playershipcolor {
+    background-color: black;
+}
 
