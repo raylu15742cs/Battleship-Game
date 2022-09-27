@@ -1,0 +1,47 @@
+h1 {
+    text-align: center;
+    font-family: 'Big Shoulders Stencil Text', cursive;
+    font-size: 7rem;
+    margin: 0;
+}
+
+/* Rules for the game */
+
+.sunk {
+    background-color: red;
+}
+.hits {
+    background-color: royalblue;
+}
+
+.bluetime{
+    background-color: black;
+}
+.blackhover {
+    background-color: yellow;
+}
+
+
+/* Rules for the Board */ 
+
+#Human, #Computer, #gameboard{
+    display: flex;
+}
+
+#Human {
+    margin-right: 30px;
+}
+.box,.ships {
+    border: 2px solid black;
+}
+
+.box {
+    height: 30px;
+    width: 30px;
+}
+
+.ships {
+    margin-left: 2px;
+}
+
+
