@@ -280,8 +280,8 @@ function hitback(e) {
 
 // gameover
 function gameover() {
-  shipsunkcount = 0;
-  computershipsunkcount = 0;
+  let shipsunkcount = 0;
+  let computershipsunkcount = 0;
   for(let i = 0; i < shipstorage.length ; i++) {
     if(shipstorage[i].sunk) {
       shipsunkcount++
